@@ -299,6 +299,11 @@ namespace SMBLibrary.Win32
             }
             else
             {
+                // NOTE: Does not support SMB queries for FileFullEaInformation
+                if (informationClass is FileInformationClass.FileFullEaInformation && status == NTStatus.STATUS_INVALID_INFO_CLASS)
+                {
+                    status = NTStatus.STATUS_INVALID_DEVICE_REQUEST;
+                }
                 result = null;
             }
             return status;
